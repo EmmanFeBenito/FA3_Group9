@@ -1,0 +1,96 @@
+erDiagram
+    DIM_SEASON {
+        string season_key PK
+        string season_name
+    }
+    
+    DIM_LENGTH_OF_SWAP {
+        string length_key PK
+        string swap_length_desc
+    }
+    
+    DIM_DESTINATION {
+        string destination_key PK
+        string region
+        string state
+    }
+    
+    DIM_SUBURB {
+        string suburb_key PK
+        string suburb_name
+        string state
+    }
+    
+    DIM_MEMBER_PROFILE {
+        string member_key PK
+        string member_name
+        boolean open_to_any_dest
+    }
+    
+    DIM_DATE {
+        string date_key PK
+        date full_date
+        string month
+    }
+
+    FACT_SWAP_COMPLETION {
+        string season_key FK
+        string length_key FK
+        string destination_key FK
+        string suburb_key FK
+        string member_key FK
+        string date_key FK
+        int completed_swap_count
+        int failed_swap_count
+    }
+
+    FACT_SATISFACTION {
+        string season_key FK
+        string length_key FK
+        string destination_key FK
+        string suburb_key FK
+        string member_key FK
+        string date_key FK
+        int destination_satisfaction
+        int ownhouse_satisfaction
+    }
+
+    FACT_RENTAL_SAVINGS {
+        string season_key FK
+        string length_key FK
+        string destination_key FK
+        string suburb_key FK
+        string member_key FK
+        string date_key FK
+        decimal rental_saving_amount
+    }
+
+    FACT_SWAPPER_COUNT {
+        string date_key FK
+        string member_key FK
+        int swapper_count
+    }
+
+    DIM_SEASON ||--|| FACT_SWAP_COMPLETION
+    DIM_LENGTH_OF_SWAP ||--|| FACT_SWAP_COMPLETION
+    DIM_DESTINATION ||--|| FACT_SWAP_COMPLETION
+    DIM_SUBURB ||--|| FACT_SWAP_COMPLETION
+    DIM_MEMBER_PROFILE ||--|| FACT_SWAP_COMPLETION
+    DIM_DATE ||--|| FACT_SWAP_COMPLETION
+
+    DIM_SEASON ||--|| FACT_SATISFACTION
+    DIM_LENGTH_OF_SWAP ||--|| FACT_SATISFACTION
+    DIM_DESTINATION ||--|| FACT_SATISFACTION
+    DIM_SUBURB ||--|| FACT_SATISFACTION
+    DIM_MEMBER_PROFILE ||--|| FACT_SATISFACTION
+    DIM_DATE ||--|| FACT_SATISFACTION
+
+    DIM_SEASON ||--|| FACT_RENTAL_SAVINGS
+    DIM_LENGTH_OF_SWAP ||--|| FACT_RENTAL_SAVINGS
+    DIM_DESTINATION ||--|| FACT_RENTAL_SAVINGS
+    DIM_SUBURB ||--|| FACT_RENTAL_SAVINGS
+    DIM_MEMBER_PROFILE ||--|| FACT_RENTAL_SAVINGS
+    DIM_DATE ||--|| FACT_RENTAL_SAVINGS
+
+    DIM_DATE ||--|| FACT_SWAPPER_COUNT
+    DIM_MEMBER_PROFILE ||--|| FACT_SWAPPER_COUNT
